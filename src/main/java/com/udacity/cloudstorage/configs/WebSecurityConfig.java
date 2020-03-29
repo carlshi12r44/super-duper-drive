@@ -1,4 +1,4 @@
-package com.udacity.cloudstorage.config;
+package com.udacity.cloudstorage.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
