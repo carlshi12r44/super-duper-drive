@@ -20,8 +20,12 @@ public class RegistrationController {
             return "redirect:signup";
         }
 
-        appUserService.register(appUser);
+        try {
+            appUserService.register(appUser);
+        } catch (Exception e) {
+            return "redirect:signup?error";
+        }
 
-        return "redirect:home";
+        return "redirect:signup?success";
     }
 }
