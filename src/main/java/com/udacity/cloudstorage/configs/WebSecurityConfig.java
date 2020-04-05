@@ -1,5 +1,7 @@
 package com.udacity.cloudstorage.configs;
 
+import com.udacity.cloudstorage.services.AppUserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,28 +10,27 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder encoder;
+    private AppUserService appUserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/**/*.css", "/**/*.js").permitAll()
-                .antMatchers("/signup").permitAll()
+                .antMatchers("/signup", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/home")
                 .permitAll()
                 .and()
                 .logout()
@@ -38,14 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        String userQuery = "SELECT username, password, enabled FROM USERS WHERE username=?";
-        String authQuery = "SELECT username, role from USERS WHERE username=?";
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(userQuery)
-                .authoritiesByUsernameQuery(authQuery)
-                .passwordEncoder(encoder);
+        auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder);
     }
 
 }

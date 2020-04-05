@@ -2,9 +2,11 @@ package com.udacity.cloudstorage.mappers;
 
 import com.udacity.cloudstorage.models.AppUser;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 @Mapper
 public interface AppUserMapper {
 
