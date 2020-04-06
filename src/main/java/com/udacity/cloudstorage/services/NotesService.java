@@ -1,7 +1,6 @@
 package com.udacity.cloudstorage.services;
 
 import com.udacity.cloudstorage.mappers.NotesMapper;
-import com.udacity.cloudstorage.models.AppUser;
 import com.udacity.cloudstorage.models.Notes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
