@@ -1,7 +1,6 @@
 package com.udacity.cloudstorage.controllers;
 
 import com.udacity.cloudstorage.models.AppUser;
-import com.udacity.cloudstorage.models.Files;
 import com.udacity.cloudstorage.services.FilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class FilesController {
@@ -17,9 +19,12 @@ public class FilesController {
     private FilesService filesService;
 
     @PostMapping("/files")
-    public String saveFile(Authentication authentication, Files file) {
+    public String saveFile(Authentication authentication, MultipartFile fileUpload) throws IOException {
         AppUser appUser = (AppUser) authentication.getPrincipal();
-        filesService.addFile(file, appUser.getUserid());
+        if (fileUpload.isEmpty()) {
+            return "redirect:/result?error";
+        }
+        filesService.addFile(fileUpload, appUser.getUserid());
         return "redirect:/result?success";
     }
 
