@@ -15,10 +15,23 @@ public class NotesController {
     private NotesService notesService;
 
     @PostMapping("/notes")
-    public String createNote(Authentication authentication, Notes note) {
+    public String createOrUpdateNote(Authentication authentication, Notes note) {
         AppUser appUser = (AppUser) authentication.getPrincipal();
-        notesService.addNote(note, appUser.getUserid());
-        return "redirect:home";
+        if (note.getNoteid() > 0) {
+            notesService.updateNote(note);
+        } else {
+            notesService.addNote(note, appUser.getUserid());
+        }
+        return "redirect:/result?success";
+    }
+
+    @GetMapping("/notes/delete")
+    public String deleteNote(@RequestParam("id") int noteid) {
+        if (noteid > 0) {
+            notesService.deleteNote(noteid);
+            return "redirect:/result?success";
+        }
+        return "redirect:/result?error";
     }
 
 }
