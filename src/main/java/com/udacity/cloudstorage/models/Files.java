@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Files {
-    private int fileid;
-    private String filename;
-    private String contenttype;
-    private String filesize;
-    private byte[] filedata;
+  private int fileid;
+  private String filename;
+  private String contenttype;
+  private String filesize;
+  private byte[] filedata;
 }

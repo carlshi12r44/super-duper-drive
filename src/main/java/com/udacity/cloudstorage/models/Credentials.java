@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Credentials {
-    private int credentialid;
-    private String url;
-    private String username;
-    private String key;
-    private String password;
+  private int credentialid;
+  private String url;
+  private String username;
+  private String key;
+  private String password;
 }

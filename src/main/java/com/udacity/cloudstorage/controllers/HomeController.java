@@ -13,23 +13,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private NotesService notesService;
+  @Autowired
+  private NotesService notesService;
 
-    @Autowired
-    private CredentialsService credentialsService;
+  @Autowired
+  private CredentialsService credentialsService;
 
-    @Autowired
-    private FilesService filesService;
+  @Autowired
+  private FilesService filesService;
 
-    @GetMapping(value = { "/", "/home" })
-    public ModelAndView getHomePage(Authentication authentication) throws Exception {
-        AppUser appUser = (AppUser) authentication.getPrincipal();
-        ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("notes", notesService.getAllNotes(appUser.getUserid()));
-        modelAndView.addObject("credentials", credentialsService.getAllCredentials(appUser.getUserid()));
-        modelAndView.addObject("files", filesService.getAllFiles(appUser.getUserid()));
-        return modelAndView;
-    }
+  @GetMapping(value = {"/", "/home"})
+  public ModelAndView getHomePage(Authentication authentication) throws Exception {
+    AppUser appUser = (AppUser) authentication.getPrincipal();
+    ModelAndView modelAndView = new ModelAndView("home");
+    modelAndView.addObject("notes", notesService.getAllNotes(appUser.getUserid()));
+    modelAndView.addObject("credentials",
+                           credentialsService.getAllCredentials(appUser.getUserid()));
+    modelAndView.addObject("files", filesService.getAllFiles(appUser.getUserid()));
+    return modelAndView;
+  }
 
 }

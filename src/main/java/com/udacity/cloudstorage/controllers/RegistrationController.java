@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    AppUserService appUserService;
+  @Autowired
+  AppUserService appUserService;
 
-    @PostMapping("/register")
-    public String register(@ModelAttribute("SpringWeb") AppUser appUser) {
+  @PostMapping("/register")
+  public String register(@ModelAttribute("SpringWeb") AppUser appUser) {
 
-        if (appUser == null) {
-            return "redirect:signup";
-        }
-
-        try {
-            appUserService.register(appUser);
-        } catch (Exception e) {
-            return "redirect:signup?error";
-        }
-
-        return "redirect:signup?success";
+    if (appUser == null) {
+      return "redirect:signup";
     }
+
+    try {
+      appUserService.register(appUser);
+    } catch (Exception e) {
+      return "redirect:signup?error";
+    }
+
+    return "redirect:signup?success";
+  }
 }
